@@ -26,14 +26,24 @@ export class AuthService {
     logged in and setting up null when logged out */
     this.afAuth.authState.subscribe((user) => {
       if (user) {
-        this.userData = user;
-        localStorage.setItem('user', JSON.stringify(this.userData));
-        JSON.parse(localStorage.getItem('user')!);
+
+        // this.userData = user;
+        // localStorage.setItem('user', JSON.stringify(this.userData));
+        // JSON.parse(localStorage.getItem('user')!);
         user.getIdToken().then(
           idToken => {
             localStorage.setItem('token', idToken);
+            this.userService.getUserInfo(idToken).subscribe(
+              user => {
+                this.userData = user;
+                localStorage.setItem('user', JSON.stringify(this.userData));
+                JSON.parse(localStorage.getItem('user')!);
+              }
+            );
             // Set logged user state by current firebase auth state
-            this.SetUserData(user);
+            // this.SetUserData(user);
+            // Go to dashboard
+            this.router.navigate(['dashboard']);
           }
         )
       } else {
@@ -43,6 +53,13 @@ export class AuthService {
       }
     });
   }
+
+  // Read user token from localStorage
+  getUserToken(): string {
+      console.log(localStorage.getItem('token')!);
+      return localStorage.getItem('token')!;
+  }
+
   // Sign in with email/password
   SignIn(email: string, password: string) {
     return this.afAuth
@@ -113,7 +130,7 @@ export class AuthService {
       .signInWithPopup(provider)
       .then((result) => {
         this.router.navigate(['dashboard']);
-        this.SetUserData(result.user);
+        // this.SetUserData(result.user);
       })
       .catch((error) => {
         window.alert(error);
@@ -122,27 +139,33 @@ export class AuthService {
   /* Setting up user data when sign in with username/password, 
   sign up with username/password and sign in with social auth  
   provider in Firestore database using AngularFirestore + AngularFirestoreDocument service */
-  SetUserData(user: any) {
+  // SetUserData(user: any) {
+
+    // var userData;
     
     // TODO enable to get role and id from be service
-    // this.userService.getUserInfo(localStorage.getItem('token')!).subscribe()
+    // this.userService.getUserInfo(localStorage.getItem('token')!).subscribe(
+    //   user => {
+    //     userData = user;
+    //   }
+    // );
 
-    const userRef: AngularFirestoreDocument<any> = this.afs.doc(
-      `users/${user.uid}`
-    );
-    const userData: User = {
-      id: 'user-id-here',
-      uid: user.uid,
-      email: user.email,
-      displayName: user.displayName,
-      photoURL: user.photoURL,
-      emailVerified: user.emailVerified,
-      role: UserRole.END
-    };
-    return userRef.set(userData, {
-      merge: true,
-    });
-  }
+    // const userRef: AngularFirestoreDocument<any> = this.afs.doc(
+    //   `users/${user.uid}`
+    // );
+    // const userData: User = {
+    //   id: 'user-id-here',
+    //   uid: user.uid,
+    //   email: user.email,
+    //   displayName: user.displayName,
+    //   photoURL: user.photoURL,
+    //   emailVerified: user.emailVerified,
+    //   role: UserRole.END
+    // };
+    // return userRef.set(userData, {
+    //   merge: true,
+    // });
+  // }
   // Sign out
   SignOut() {
     return this.afAuth.signOut().then(() => {

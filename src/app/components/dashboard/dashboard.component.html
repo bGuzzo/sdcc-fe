@@ -38,10 +38,12 @@
                                 src="{{(user.photoURL) ? user.photoURL : '/assets/dummy-user.png'}}"
                                 alt="{{user.displayName}}">
                             <div class="media-body">
-                                <h1>Hello: <strong>{{(user.displayName) ? user.displayName : 'User'}}</strong></h1>
-                                <p>User ID: <strong>{{user.uid}}</strong></p>
+                                <h1>Hello: <strong>{{(user.email) ? user.email : 'User'}}</strong></h1>
+                                <p>User ID: <strong>{{user.id}}</strong></p>
                                 <p>Email: <strong>{{user.email}}</strong></p>
-                                <p>Email Verified: <strong>{{user.emailVerified}}</strong></p>
+                                <p>Name: <strong>{{user.name}}</strong></p>
+                                <p>Surname: <strong>{{user.surname}}</strong></p>
+                                <p>Role: <strong>{{user.role}}</strong></p>
                             </div>
                         </div>
                     </div>

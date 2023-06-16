@@ -17,7 +17,8 @@ import { VerifyEmailComponent } from './components/verify-email/verify-email.com
 // Auth service
 import { AuthService } from "./shared/services/auth.service";
 // HttpClient
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { RequestInterceptor } from './http-interceptors/request-interceptor';
 
 @NgModule({
   declarations: [
@@ -35,14 +36,12 @@ import { HttpClientModule } from '@angular/common/http';
     AngularFirestoreModule,
     AngularFireStorageModule,
     AngularFireDatabaseModule,
-    // End Firebase module import
     BrowserModule,
     AppRoutingModule,
-    // HttpClient
     HttpClientModule
 
   ],
-  providers: [AuthService],
+  providers: [AuthService, { provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
