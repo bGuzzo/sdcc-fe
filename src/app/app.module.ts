@@ -16,6 +16,8 @@ import { ForgotPasswordComponent } from './components/forgot-password/forgot-pas
 import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
 // Auth service
 import { AuthService } from "./shared/services/auth.service";
+// HttpClient
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -36,6 +38,8 @@ import { AuthService } from "./shared/services/auth.service";
     // End Firebase module import
     BrowserModule,
     AppRoutingModule,
+    // HttpClient
+    HttpClientModule
 
   ],
   providers: [AuthService],
