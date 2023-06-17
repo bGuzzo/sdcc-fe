@@ -23,6 +23,12 @@ import { UserInfoComponent } from './components/user-info/user-info.component';
 import { SearchComponent } from './components/search/search.component';
 import { AdminComponent } from './components/admin/admin.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+// Anguar matirial
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { CommonModule } from '@angular/common';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 @NgModule({
   declarations: [
@@ -37,6 +43,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AdminComponent,
   ],
   imports: [
+    // Anguar matirial
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    CommonModule,
     // Firebase module import
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
@@ -50,6 +61,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
   ],
   providers: [AuthService, { provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true}],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }

@@ -7,4 +7,6 @@ export interface AifaDrugResponse {
     size: number;
 
     page: number;
+
+    totalPage: number;
 }
