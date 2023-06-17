@@ -1,8 +1,8 @@
 <!-- Top navigation -->
 <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-    <a class="navbar-brand col-sm-3 col-md-2 mr-0">
-        <img class="brand-logo" src="assets/logo-positronx-white.svg" alt="positronX.io Logo">
-    </a>
+    <p class="navbar-brand col-sm-3 col-md-2 mr-0">
+         <img class="brand-logo" src="assets/cloud.svg" alt="positronX.io Logo">
+    </p>
 </nav>
 <!-- Sidebar navigation -->
 <div class="container-fluid">
@@ -11,8 +11,20 @@
             <div class="sidebar-sticky">
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link active">
+                        <a [ngClass]="selected == 0 ? 'nav-link active' : 'nav-link'" (click)="selected = 0">
                             <i class="fas fa-user"></i>User Profile
+                        </a>
+                    </li>
+                    <!-- Search Page -->
+                    <li class="nav-item">
+                        <a [ngClass]="selected == 1 ? 'nav-link active' : 'nav-link'" (click)="selected = 1">
+                            <i class="fas fa-search"></i>Search
+                        </a>
+                    </li>
+                    <!-- Admin Page -->
+                    <li class="nav-item">
+                        <a [ngClass]="selected == 2 ? 'nav-link active' : 'nav-link'" *ngIf="authService.isUserAdmin()" (click)="selected = 2">
+                            <i class="fas fa-toolbox"></i>Admin
                         </a>
                     </li>
                     <!-- Calling SignOut() Api from AuthService -->
@@ -26,29 +38,9 @@
         </nav>
         <!-- Main content -->
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-            <div class="inner-adjust">
-                <div class="pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2">User Profile</h1>
-                </div>
-                <!-- Show user data when logged in -->
-                <div class="row" *ngIf="authService.userData as user">
-                    <div class="col-md-12">
-                        <div class="media">
-                            <img class="align-self-start mr-5 img-thumbnail rounded-circle"
-                                src="{{(user.photoURL) ? user.photoURL : '/assets/dummy-user.png'}}"
-                                alt="{{user.displayName}}">
-                            <div class="media-body">
-                                <h1>Hello: <strong>{{(user.email) ? user.email : 'User'}}</strong></h1>
-                                <p>User ID: <strong>{{user.id}}</strong></p>
-                                <p>Email: <strong>{{user.email}}</strong></p>
-                                <p>Name: <strong>{{user.name}}</strong></p>
-                                <p>Surname: <strong>{{user.surname}}</strong></p>
-                                <p>Role: <strong>{{user.role}}</strong></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <app-user-info *ngIf="selected == 0"></app-user-info>
+            <app-search *ngIf="selected == 1"></app-search>
+            <app-admin *ngIf="selected == 2"></app-admin>
         </main>
     </div>
 </div>

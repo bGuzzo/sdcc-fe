@@ -1,11 +1,11 @@
 import { UserRole } from "../enums/user-role";
 
-export interface User {
-    id: string,
-    firebaseId: string,
-    email: string,
-    name: string,
-    surname: string,
-    role: UserRole,
-    username: string,
+export class User {
+    public id: string | null = null;
+    public firebaseId: string | null = null;
+    public email: string | null = null;
+    public name: string | null = null;
+    public surname: string | null = null;
+    public role: UserRole | null = null;
+    public username: string | null = null;
 }

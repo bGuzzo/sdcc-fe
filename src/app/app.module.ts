@@ -19,6 +19,10 @@ import { AuthService } from "./shared/services/auth.service";
 // HttpClient
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RequestInterceptor } from './http-interceptors/request-interceptor';
+import { UserInfoComponent } from './components/user-info/user-info.component';
+import { SearchComponent } from './components/search/search.component';
+import { AdminComponent } from './components/admin/admin.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -27,7 +31,10 @@ import { RequestInterceptor } from './http-interceptors/request-interceptor';
     SignInComponent,
     SignUpComponent,
     ForgotPasswordComponent,
-    VerifyEmailComponent
+    VerifyEmailComponent,
+    UserInfoComponent,
+    SearchComponent,
+    AdminComponent,
   ],
   imports: [
     // Firebase module import
@@ -38,7 +45,8 @@ import { RequestInterceptor } from './http-interceptors/request-interceptor';
     AngularFireDatabaseModule,
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule
 
   ],
   providers: [AuthService, { provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true}],
