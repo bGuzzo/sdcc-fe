@@ -1,13 +1,11 @@
 export class UserRegistrationRequest {
-    public email: string;
-    public password: string;
-    public name: string;
-    public surname: string;
+
+    public email: string | null = null;
+
+    public password: string | null = null;
+
+    public name: string | null = null;
+
+    public surname: string | null = null;
     
-    public constructor(email: string, password: string, name: string, surname: string){
-        this.email = email;
-        this.password = password;
-        this.name = name;
-        this.surname = surname;
-    }
 }

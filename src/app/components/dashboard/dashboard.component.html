@@ -15,21 +15,27 @@
                             <i class="fas fa-user"></i>User Profile
                         </a>
                     </li>
+                     <!-- Add Admin User -->
+                     <li class="nav-item">
+                        <a [ngClass]="selected == 1 ? 'nav-link active' : 'nav-link'" *ngIf="authService.isUserAdmin()" (click)="selected = 1">
+                            <i class="fas fa-toolbox"></i>Add admin user
+                        </a>
+                    </li>
                     <!-- Search Page -->
                     <li class="nav-item">
-                        <a [ngClass]="selected == 1 ? 'nav-link active' : 'nav-link'" (click)="selected = 1">
+                        <a [ngClass]="selected == 2 ? 'nav-link active' : 'nav-link'" (click)="selected = 2">
                             <i class="fas fa-search"></i>Search
                         </a>
                     </li>
-                    <!-- Admin Page -->
+                    <!-- Add drug -->
                     <li class="nav-item">
-                        <a [ngClass]="selected == 2 ? 'nav-link active' : 'nav-link'" *ngIf="authService.isUserAdmin()" (click)="selected = 2">
-                            <i class="fas fa-toolbox"></i>Admin
+                        <a [ngClass]="selected == 3 ? 'nav-link active' : 'nav-link'" *ngIf="authService.isUserAdmin()" (click)="selected = 3">
+                            <i class="fas fa-toolbox"></i>Add drug
                         </a>
                     </li>
                     <!-- Calling SignOut() Api from AuthService -->
                     <li class="nav-item">
-                        <a class="nav-link" (click)="authService.SignOut()">
+                        <a class="nav-link" (click)="authService.signOut()">
                             <i class="fas fa-sign-out-alt"></i>Log out
                         </a>
                     </li>
@@ -39,8 +45,9 @@
         <!-- Main content -->
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
             <app-user-info *ngIf="selected == 0"></app-user-info>
-            <app-search *ngIf="selected == 1"></app-search>
-            <app-admin *ngIf="selected == 2"></app-admin>
+            <app-add-admin-user *ngIf="selected == 1"></app-add-admin-user>
+            <app-search *ngIf="selected == 2"></app-search>
+            <app-admin *ngIf="selected == 3"></app-admin>
         </main>
     </div>
 </div>

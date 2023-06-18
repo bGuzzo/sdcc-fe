@@ -1,0 +1,31 @@
+<div class="inner-adjust">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="media">
+                <div class="media-body">
+                    <form (ngSubmit)="onSubmit()" #heroForm="ngForm" class="input-form">
+                        <div class="form-group input-form-div">
+                            <label class="infput-form-header-text" for="name">Email</label>
+                            <input type="text" class="form-control input-text-box" [(ngModel)]="newAdmin.email" name="email">
+                        </div>
+                        <div class="form-group input-form-div">
+                            <label class="infput-form-header-text" for="name">Name</label>
+                            <input type="text" class="form-control input-text-box" [(ngModel)]="newAdmin.name" name="name">
+                        </div>
+                        <div class="form-group input-form-div">
+                            <label class="infput-form-header-text" for="name">Surname</label>
+                            <input type="text" class="form-control input-text-box" [(ngModel)]="newAdmin.surname" name="surname">
+                        </div>
+                        <div class="form-group input-form-div">
+                            <label class="infput-form-header-text" for="name">password</label>
+                            <input type="password" class="form-control input-text-box" [(ngModel)]="newAdmin.password" name="password">
+                        </div>
+                        <div class="submit-button-div">
+                            <button type="submit" class="btn btn-success">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

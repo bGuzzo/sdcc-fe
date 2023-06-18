@@ -1,1 +1,39 @@
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+table {
+    width: 100%;
+}
+
+.scroll-container {
+    height: 600px;
+    max-width: 100%;
+    overflow: scroll;
+}
+
+.result-div {
+    padding-left: 40px;
+    margin: auto;
+    padding-top: 10px;
+}
+
+.text-price-p {
+    font-size: 20px;
+}
+
+.delete-btn {
+    background-color: red;
+    border-color: red;
+}
+
+.padding-div {
+    padding-left: 15px;
+    border-radius: 12px;
+}
+
+.search-box {
+    height: 50px;
+}
+
+.btn-size {
+    height: 50px;
+}

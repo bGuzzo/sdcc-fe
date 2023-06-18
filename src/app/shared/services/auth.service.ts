@@ -59,17 +59,17 @@ export class AuthService {
     return throwError(() => new Error('Auth Error; please try again later.'));
   }
 
-  isUserAdmin(): boolean {
+  public isUserAdmin(): boolean {
     return this.userData?.role == UserRole.ADMIN;
   }
 
   // Read user token from localStorage
-  getUserToken(): string {
+  public getUserToken(): string {
     return localStorage.getItem('token')!;
   }
 
   // Sign in with email/password
-  SignIn(email: string, password: string) {
+  public signIn(email: string, password: string) {
     return this.afAuth
       .signInWithEmailAndPassword(email, password)
       .then((result) => {
@@ -87,14 +87,21 @@ export class AuthService {
 
   // User registation
   public signUp(email: string, password: string, name: string, surname: string) {
-    var newUser = new UserRegistrationRequest(email, password, name, surname);
+    var newUser = new UserRegistrationRequest();
+    newUser.email = email;
+    newUser.password = password;
+    newUser.name = name;
+    newUser.surname = surname;
     console.log('here');
-    this.userService.registerNewUser(newUser);
-    this.router.navigate(['sign-in']);
+    this.userService.registerNewUser(newUser).subscribe(
+      _ => {
+        this.router.navigate(['sign-in']);
+      }
+    );
   }
 
   // Reset Forggot password
-  ForgotPassword(passwordResetEmail: string) {
+  public forgotPassword(passwordResetEmail: string) {
     return this.afAuth
       .sendPasswordResetEmail(passwordResetEmail)
       .then(() => {
@@ -106,21 +113,11 @@ export class AuthService {
   }
 
   // Sign out
-  SignOut() {
+  public signOut() {
     return this.afAuth.signOut().then(() => {
       this.cleanLocalStorage();
       this.router.navigate(['sign-in']);
     });
-  }
-
-
-  // Send email verfificaiton when new user sign up
-  SendVerificationMail() {
-    return this.afAuth.currentUser
-      .then((u: any) => u.sendEmailVerification())
-      .then(() => {
-        this.router.navigate(['verify-email-address']);
-      });
   }
 
   // Returns true when user is looged in and email is verified
@@ -128,53 +125,4 @@ export class AuthService {
     const user = JSON.parse(localStorage.getItem('user')!);
     return user !== null;
   }
-
-  // Sign in with Google
-  // GoogleAuth() {
-  //   return this.AuthLogin(new auth.GoogleAuthProvider()).then((res: any) => {
-  //     this.router.navigate(['dashboard']);
-  //   });
-  // }
-  // Auth logic to run auth providers
-  // AuthLogin(provider: any) {
-  //   return this.afAuth
-  //     .signInWithPopup(provider)
-  //     .then((result) => {
-  //       this.router.navigate(['dashboard']);
-  //       // this.SetUserData(result.user);
-  //     })
-  //     .catch((error) => {
-  //       window.alert(error);
-  //     });
-  // }
-  /* Setting up user data when sign in with username/password, 
-  sign up with username/password and sign in with social auth  
-  provider in Firestore database using AngularFirestore + AngularFirestoreDocument service */
-  // SetUserData(user: any) {
-
-  // var userData;
-
-  // TODO enable to get role and id from be service
-  // this.userService.getUserInfo(localStorage.getItem('token')!).subscribe(
-  //   user => {
-  //     userData = user;
-  //   }
-  // );
-
-  // const userRef: AngularFirestoreDocument<any> = this.afs.doc(
-  //   `users/${user.uid}`
-  // );
-  // const userData: User = {
-  //   id: 'user-id-here',
-  //   uid: user.uid,
-  //   email: user.email,
-  //   displayName: user.displayName,
-  //   photoURL: user.photoURL,
-  //   emailVerified: user.emailVerified,
-  //   role: UserRole.END
-  // };
-  // return userRef.set(userData, {
-  //   merge: true,
-  // });
-  // }
 }

@@ -14,8 +14,12 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  public registerNewUser(user: UserRegistrationRequest) {
-    this.http.post<any>(Constants.API_USER_NEW, user).subscribe();
+  public registerNewUser(user: UserRegistrationRequest): Observable<any> {
+    return this.http.post<any>(Constants.API_USER_NEW, user);
+  }
+
+  public registerNewAdmin(user: UserRegistrationRequest): Observable<any> {
+    return this.http.put<any>(Constants.API_ADMIN_NEW, user);
   }
 
   public getUserInfo(token: string): Observable<User> {

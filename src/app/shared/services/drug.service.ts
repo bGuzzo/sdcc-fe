@@ -6,7 +6,9 @@ import { HttpErrorResponse } from '@angular/common/http'
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 import { User } from '../entities/user';
-import { AifaDrugResponse } from '../entities/response/aifaDrugResponse';
+import { AifaDrugResponse } from '../entities/response/aifa-drug-response';
+import { AifaDrugSearchReponse } from '../entities/response/aifa-drug-search-response';
+import { NewAifaDrugRequest } from '../entities/request/new-drug-request';
 
 @Injectable({
   providedIn: 'root'
@@ -20,9 +22,13 @@ export class DrugService {
     return this.http.get<AifaDrugResponse>(Constants.API_DRUG_ALL, params);
   }
 
-  public getSearchDrugs(activeSubstance: string, size: number, page: number): Observable<AifaDrugResponse> {
+  public getSearchDrugs(activeSubstance: string, size: number, page: number): Observable<AifaDrugSearchReponse> {
     const params = { params: new HttpParams().set('size', size).set('page', page).set('activeSubstance', activeSubstance) }
-    return this.http.get<AifaDrugResponse>(Constants.API_DRUG_ALL, params);
+    return this.http.get<AifaDrugSearchReponse>(Constants.API_DRUG_SEARCH, params);
+  }
+
+  public putNewDrug(newDrug: NewAifaDrugRequest): Observable<any> {
+    return this.http.put(Constants.API_DRUG_NEW, newDrug);
   }
 
   // public putNewDrug()

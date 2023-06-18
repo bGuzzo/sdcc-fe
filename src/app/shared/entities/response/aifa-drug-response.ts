@@ -1,4 +1,4 @@
-import { AifaDrug } from "../aifaDrug";
+import { AifaDrug } from "../aifa-drug";
 
 export interface AifaDrugResponse {
     
@@ -8,5 +8,5 @@ export interface AifaDrugResponse {
 
     page: number;
 
-    totalPage: number;
+    totalElement: number;
 }

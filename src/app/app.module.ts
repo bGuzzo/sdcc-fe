@@ -13,7 +13,6 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
-import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
 // Auth service
 import { AuthService } from "./shared/services/auth.service";
 // HttpClient
@@ -29,6 +28,10 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { CommonModule } from '@angular/common';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+// Form
+import { FormsModule } from '@angular/forms';
+import { SpinnerComponent } from './components/spinner/spinner.component';
+import { AddAdminUserComponent } from './components/add-admin-user/add-admin-user.component';
 
 @NgModule({
   declarations: [
@@ -37,10 +40,11 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
     SignInComponent,
     SignUpComponent,
     ForgotPasswordComponent,
-    VerifyEmailComponent,
     UserInfoComponent,
     SearchComponent,
     AdminComponent,
+    SpinnerComponent,
+    AddAdminUserComponent
   ],
   imports: [
     // Anguar matirial
@@ -57,8 +61,9 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    BrowserAnimationsModule
-
+    BrowserAnimationsModule,
+    // Form
+    FormsModule
   ],
   providers: [AuthService, { provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true}],
   bootstrap: [AppComponent],
