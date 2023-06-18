@@ -1,11 +1,3 @@
-// Import the functions you need from the SDKs you need
-// import { initializeApp } from "firebase/app";
-// import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 export const environment = {
   production: true,
   firebase: {
@@ -17,9 +9,6 @@ export const environment = {
     appId: "1:453644808155:web:f8c963ab1df32dfc6d01fe",
     measurementId: "G-6G0TM6LMPH"
   },
-  backendUrl: "http://localhost:8080/api/v1/"
+  backendUrl: "https://sdcc-exam.ew.r.appspot.com/api/v1/",
+  backendPublicApi: "https://sdcc-exam.ew.r.appspot.com/api/v1/public/"
 };
-
-// Initialize Firebase
-// const app = initializeApp(firebaseConfig);
-// const analytics = getAnalytics(app);
