@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "sdcc-exam": {
+      "hosting": {
+        "sdcc-fe": [
+          "sdcc-exam"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "sdcc-exam"
+  }
+}

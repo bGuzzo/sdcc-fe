@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/sdcc-fe/browser",
+            "outputPath": "dist/sdcc-fe/",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [
@@ -47,8 +47,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "1mb",
-                  "maximumError": "2mb"
+                  "maximumWarning": "500kb",
+                  "maximumError": "3mb"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -167,6 +167,15 @@
             }
           },
           "defaultConfiguration": "production"
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "version": 2,
+            "browserTarget": "sdcc-fe:build:production",
+            "serverTarget": "sdcc-fe:server:production",
+            "prerenderTarget": "sdcc-fe:prerender:production"
+          }
         }
       }
     }
