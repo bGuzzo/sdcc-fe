@@ -9,6 +9,6 @@ export const environment = {
     appId: "1:453644808155:web:f8c963ab1df32dfc6d01fe",
     measurementId: "G-6G0TM6LMPH"
   },
-  backendUrl: "https://sdcc-exam.ew.r.appspot.com/api/v1/",
+  backendApi: "https://sdcc-exam.ew.r.appspot.com/api/v1/",
   backendPublicApi: "https://sdcc-exam.ew.r.appspot.com/api/v1/public/"
 };
