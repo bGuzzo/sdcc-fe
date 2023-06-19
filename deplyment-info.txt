@@ -1,2 +1,2 @@
 ng build --configuration=production --aot
-firerbase deploy
+firebase deploy
