@@ -23,14 +23,7 @@ export class RequestInterceptor implements HttpInterceptor {
   }
 
   private handleError(error: HttpErrorResponse) {
-    if (error.status === 0) {
-      // Network error
-      window.alert('Network error')
-    } else {
-      // Backend error
-      window.alert(`Backend returned code ${error.status}`);
-    }
-    // Throw error on console
+    window.alert('Error! Try again');
     return throwError(() => new Error('Something bad happened; please try again later.'));
   }
 }
