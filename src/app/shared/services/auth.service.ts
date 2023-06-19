@@ -1,6 +1,5 @@
 import { Injectable, NgZone } from '@angular/core';
 import { User } from '../entities/user';
-import * as auth from 'firebase/auth';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import {
   AngularFirestore,
@@ -12,6 +11,7 @@ import { UserService } from './user.service';
 import { UserRegistrationRequest } from '../entities/request/user-registration-request';
 import { catchError, throwError } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
+import { error } from 'console';
 
 @Injectable({
   providedIn: 'root',
@@ -32,18 +32,24 @@ export class AuthService {
         user.getIdToken().then(
           idToken => {
             localStorage.setItem('token', idToken);
-            this.userService.getUserInfo(idToken).pipe(catchError(this.hadleAuthError)).subscribe(
-              user => {
+            this.userService.getUserInfo(idToken).subscribe({
+              next: (user) => {
                 this.userData = user;
                 localStorage.setItem('user', JSON.stringify(this.userData));
                 JSON.parse(localStorage.getItem('user')!);
                 this.router.navigate(['dashboard']);
+              },
+              error: () => {
+                this.afAuth.signOut().then(
+                  _ => {
+                    this.cleanLocalStorage();
+                    this.router.navigate(['sign-in']);
+                  }
+                );
               }
-            );
+            });
           }
         )
-      } else {
-        this.cleanLocalStorage();
       }
     });
   }
@@ -51,12 +57,6 @@ export class AuthService {
   private cleanLocalStorage() {
     localStorage.setItem('token', 'null');
     localStorage.setItem('user', 'null');
-    JSON.parse(localStorage.getItem('user')!);
-  }
-
-  private hadleAuthError(error: HttpErrorResponse) {
-    this.cleanLocalStorage();
-    return throwError(() => new Error('Auth Error; please try again later.'));
   }
 
   public isUserAdmin(): boolean {
@@ -70,6 +70,7 @@ export class AuthService {
 
   // Sign in with email/password
   public signIn(email: string, password: string) {
+    this.cleanLocalStorage();
     return this.afAuth
       .signInWithEmailAndPassword(email, password)
       .then((result) => {
@@ -78,7 +79,6 @@ export class AuthService {
             this.router.navigate(['dashboard']);
           }
         });
-        // this.SetUserData(result.user);
       })
       .catch((error) => {
         window.alert(error.message);

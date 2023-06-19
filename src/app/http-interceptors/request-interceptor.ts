@@ -28,7 +28,7 @@ export class RequestInterceptor implements HttpInterceptor {
       window.alert('Network error')
     } else {
       // Backend error
-      window.alert(`Backend returned code ${error.status} with message: ` + error.error.message);
+      window.alert(`Backend returned code ${error.status}`);
     }
     // Throw error on console
     return throwError(() => new Error('Something bad happened; please try again later.'));
