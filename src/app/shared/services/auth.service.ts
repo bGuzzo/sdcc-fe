@@ -1,17 +1,12 @@
 import { Injectable, NgZone } from '@angular/core';
 import { User } from '../entities/user';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import {
-  AngularFirestore,
-  AngularFirestoreDocument,
-} from '@angular/fire/compat/firestore';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
 import { UserRole } from '../enums/user-role';
 import { UserService } from './user.service';
 import { UserRegistrationRequest } from '../entities/request/user-registration-request';
-import { catchError, throwError } from 'rxjs';
-import { HttpErrorResponse } from '@angular/common/http';
-import { error } from 'console';
+import { SnackbarService } from './snackbar.service';
 
 @Injectable({
   providedIn: 'root',
@@ -24,7 +19,8 @@ export class AuthService {
     public afAuth: AngularFireAuth, // Inject Firebase auth service
     public router: Router,
     public ngZone: NgZone, // NgZone service to remove outside scope warning
-    public userService: UserService
+    public userService: UserService,
+    private snackbarServ: SnackbarService
   ) {
     // Using local storage to stage usuer and token data
     this.afAuth.authState.subscribe((user) => {
@@ -42,6 +38,7 @@ export class AuthService {
               error: () => {
                 this.afAuth.signOut().then(
                   _ => {
+                    this.snackbarServ.error("Wrong credentials or Server error");
                     this.cleanLocalStorage();
                     this.router.navigate(['sign-in']);
                   }
@@ -81,7 +78,7 @@ export class AuthService {
         });
       })
       .catch((error) => {
-        window.alert(error.message);
+        this.snackbarServ.error("Wrong credentials or Server error");
       });
   }
 
@@ -105,10 +102,10 @@ export class AuthService {
     return this.afAuth
       .sendPasswordResetEmail(passwordResetEmail)
       .then(() => {
-        window.alert('Password reset email sent, check your inbox.');
+        this.snackbarServ.success("Password reset email sent");
       })
       .catch((error) => {
-        window.alert(error);
+        this.snackbarServ.error("Try again");
       });
   }
 

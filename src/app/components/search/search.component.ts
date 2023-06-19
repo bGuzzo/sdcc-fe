@@ -12,7 +12,7 @@ import { AifaDrug } from 'src/app/shared/entities/aifa-drug';
 })
 export class SearchComponent {
 
-  constructor(public drugServ: DrugService, private cdr: ChangeDetectorRef) { }
+  constructor(public drugServ: DrugService) { }
 
   // page state
   private searchState: boolean = false;

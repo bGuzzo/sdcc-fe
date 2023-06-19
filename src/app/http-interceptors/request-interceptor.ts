@@ -3,11 +3,16 @@ import { HttpRequest, HttpInterceptor, HttpHandler, HttpErrorResponse} from "@an
 import { Injectable } from "@angular/core";
 import { catchError, finalize, throwError } from "rxjs";
 import { LoaderService } from "../shared/services/loader.service";
+import { Constants } from "../shared/constants";
+import { SnackbarService } from "../shared/services/snackbar.service";
 
 @Injectable()
 export class RequestInterceptor implements HttpInterceptor {
 
-  constructor(private auth: AuthService, private loader: LoaderService) {}
+  constructor(private auth: AuthService, private loader: LoaderService, public snackbarServ: SnackbarService) {}
+
+  // No Error handling
+  private noErrHadle: Array<string> = [Constants.API_USER_INFO];
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
     this.loader.showSpinner();
@@ -15,7 +20,14 @@ export class RequestInterceptor implements HttpInterceptor {
     const authReq = req.clone({
       headers: req.headers.set('Authorization', `Bearer ${authToken}`)
     });
-    return next.handle(authReq).pipe(catchError(this.handleError)).pipe(
+    if(this.noErrHadle.indexOf(req.url) != -1) {
+      return next.handle(authReq).pipe(
+        finalize(() => {
+          this.loader.hideSpinner();
+        })
+      );
+    }
+    return next.handle(authReq).pipe(catchError(this.handleError.bind(this))).pipe(
       finalize(() => {
         this.loader.hideSpinner();
       })
@@ -23,7 +35,7 @@ export class RequestInterceptor implements HttpInterceptor {
   }
 
   private handleError(error: HttpErrorResponse) {
-    window.alert('Error! Try again');
+    this.snackbarServ.error("Bad request, try again");
     return throwError(() => new Error('Something bad happened; please try again later.'));
   }
 }

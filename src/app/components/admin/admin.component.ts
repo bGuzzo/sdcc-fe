@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NewAifaDrugRequest } from 'src/app/shared/entities/request/new-drug-request';
 import { DrugService } from 'src/app/shared/services/drug.service';
+import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 
 @Component({
   selector: 'app-admin',
@@ -9,7 +10,7 @@ import { DrugService } from 'src/app/shared/services/drug.service';
 })
 export class AdminComponent {
 
-  constructor(private drugServ: DrugService) {}
+  constructor(private drugServ: DrugService, private snackbarServ: SnackbarService) {}
 
   drugReq = new NewAifaDrugRequest();
 
@@ -17,10 +18,9 @@ export class AdminComponent {
     this.drugServ.putNewDrug(this.drugReq).subscribe(
       data => {
         this.drugReq = new NewAifaDrugRequest();
-        window.alert('Drug successfully added');
+        this.snackbarServ.success("Drug added");
       }
     );
-    // 
   }
 
 

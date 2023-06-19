@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
+import { NgToastService } from 'ng-angular-popup';
 import { UserRegistrationRequest } from 'src/app/shared/entities/request/user-registration-request';
+import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { UserService } from 'src/app/shared/services/user.service';
 
 @Component({
@@ -9,7 +11,7 @@ import { UserService } from 'src/app/shared/services/user.service';
 })
 export class AddAdminUserComponent {
 
-  constructor(private userServ: UserService) {}
+  constructor(private userServ: UserService, private snackbarServ: SnackbarService) {}
 
   newAdmin = new UserRegistrationRequest();
 
@@ -17,7 +19,7 @@ export class AddAdminUserComponent {
     this.userServ.registerNewAdmin(this.newAdmin).subscribe(
       _ => {
         this.newAdmin = new UserRegistrationRequest();
-        window.alert('Admin user successfully registered');
+        this.snackbarServ.success("Admin user registered");
       }
     );
   }
