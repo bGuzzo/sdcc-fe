@@ -5,9 +5,13 @@ table {
 }
 
 .scroll-container {
-    height: 600px;
+    overflow-x: scroll;
+    overflow-y: scroll;
+}
+
+.search-table {
+    max-height: 600px;
     max-width: 100%;
-    overflow: scroll;
 }
 
 .result-div {

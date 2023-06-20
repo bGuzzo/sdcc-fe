@@ -19,7 +19,7 @@ export class UserService {
   }
 
   public registerNewAdmin(user: UserRegistrationRequest): Observable<any> {
-    return this.http.put<any>(Constants.API_ADMIN_NEW, user);
+    return this.http.post<any>(Constants.API_ADMIN_NEW, user);
   }
 
   public getUserInfo(token: string): Observable<User> {

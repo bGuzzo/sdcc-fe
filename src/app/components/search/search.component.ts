@@ -4,15 +4,26 @@ import { MatPaginator, MatPaginatorIntl, PageEvent } from '@angular/material/pag
 import { MatTableDataSource } from '@angular/material/table';
 import { AifaDrugResponse } from 'src/app/shared/entities/response/aifa-drug-response';
 import { AifaDrug } from 'src/app/shared/entities/aifa-drug';
+import { AuthService } from 'src/app/shared/services/auth.service';
+import { MatDialog } from '@angular/material/dialog';
+import { UpdateDrugComponent } from '../update-drug/update-drug.component';
+import { SnackbarService } from 'src/app/shared/services/snackbar.service';
+
 
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
-  styleUrls: ['./search.component.scss']
+  styleUrls: ['./search.component.scss'],
 })
 export class SearchComponent {
 
-  constructor(public drugServ: DrugService) { }
+  public displayedColumns: string[] = ['principio_attivo', 'farmaco', 'confezione', 'confezione_di_riferimento', 'ditta', 'prezzo_pubblico'];
+
+  constructor(public drugServ: DrugService, public authServ: AuthService, public dialog: MatDialog, private snackbarServ: SnackbarService) {
+    if(authServ.isUserAdmin()){
+      this.displayedColumns = this.displayedColumns.concat('edit');
+    }
+   }
 
   // page state
   private searchState: boolean = false;
@@ -28,8 +39,6 @@ export class SearchComponent {
   public page: number = 0;
 
   public totalElement: number = 0;
-
-  public displayedColumns: string[] = ['principio_attivo', 'farmaco', 'confezione', 'confezione_di_riferimento', 'ditta', 'prezzo_pubblico'];
 
   public dataSource: MatTableDataSource<AifaDrug> = new MatTableDataSource<AifaDrug>(this.drugs);
 
@@ -98,5 +107,20 @@ export class SearchComponent {
     this.size = 15;
     this.page = 0;
     this.ngOnInit();
+  }
+
+  public updateDrug(drug: AifaDrug){
+    const oldDrug = Object.assign({}, drug);
+    const dialogRef = this.dialog.open(UpdateDrugComponent, {data: oldDrug});
+    dialogRef.afterClosed().subscribe(result => {
+      if(result){
+        this.drugServ.putUpdatedDrug(result).subscribe(
+          _ => {
+            drug = result;
+            this.snackbarServ.success("Drug updated");
+          }
+        );
+      }
+    });
   }
 }

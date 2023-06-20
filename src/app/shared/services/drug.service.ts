@@ -9,6 +9,7 @@ import { User } from '../entities/user';
 import { AifaDrugResponse } from '../entities/response/aifa-drug-response';
 import { AifaDrugSearchReponse } from '../entities/response/aifa-drug-search-response';
 import { NewAifaDrugRequest } from '../entities/request/new-drug-request';
+import { AifaDrug } from '../entities/aifa-drug';
 
 @Injectable({
   providedIn: 'root'
@@ -28,8 +29,11 @@ export class DrugService {
   }
 
   public putNewDrug(newDrug: NewAifaDrugRequest): Observable<any> {
-    return this.http.put(Constants.API_DRUG_NEW, newDrug);
+    return this.http.post(Constants.API_DRUG_NEW, newDrug);
   }
 
-  // public putNewDrug()
+  public putUpdatedDrug(updateDrug: AifaDrug): Observable<any> {
+    var updateDrugReq = new NewAifaDrugRequest();
+    return this.http.put(Constants.API_DRUG_UPD+updateDrug.id, updateDrug);
+  }
 }

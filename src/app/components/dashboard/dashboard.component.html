@@ -1,7 +1,7 @@
 <!-- Top navigation -->
 <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
     <p class="navbar-brand col-sm-3 col-md-2 mr-0">
-         <img class="brand-logo" src="assets/cloud.svg" alt="positronX.io Logo">
+        <img class="brand-logo" src="assets/cloud.svg" alt="positronX.io Logo">
     </p>
 </nav>
 <!-- Sidebar navigation -->
@@ -15,9 +15,10 @@
                             <i class="fas fa-user"></i>User Profile
                         </a>
                     </li>
-                     <!-- Add Admin User -->
-                     <li class="nav-item">
-                        <a [ngClass]="selected == 1 ? 'nav-link active' : 'nav-link'" *ngIf="authService.isUserAdmin()" (click)="selected = 1">
+                    <!-- Add Admin User -->
+                    <li class="nav-item">
+                        <a [ngClass]="selected == 1 ? 'nav-link active' : 'nav-link'" *ngIf="authService.isUserAdmin()"
+                            (click)="selected = 1">
                             <i class="fas fa-toolbox"></i>Add admin user
                         </a>
                     </li>
@@ -29,7 +30,8 @@
                     </li>
                     <!-- Add drug -->
                     <li class="nav-item">
-                        <a [ngClass]="selected == 3 ? 'nav-link active' : 'nav-link'" *ngIf="authService.isUserAdmin()" (click)="selected = 3">
+                        <a [ngClass]="selected == 3 ? 'nav-link active' : 'nav-link'" *ngIf="authService.isUserAdmin()"
+                            (click)="selected = 3">
                             <i class="fas fa-toolbox"></i>Add drug
                         </a>
                     </li>
@@ -44,10 +46,12 @@
         </nav>
         <!-- Main content -->
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-            <app-user-info *ngIf="selected == 0"></app-user-info>
-            <app-add-admin-user *ngIf="selected == 1"></app-add-admin-user>
-            <app-search *ngIf="selected == 2"></app-search>
-            <app-admin *ngIf="selected == 3"></app-admin>
+            <div class="div-main-scroll">
+                <app-user-info *ngIf="selected == 0"></app-user-info>
+                <app-add-admin-user *ngIf="selected == 1"></app-add-admin-user>
+                <app-search *ngIf="selected == 2"></app-search>
+                <app-admin *ngIf="selected == 3"></app-admin>
+            </div>
         </main>
     </div>
 </div>

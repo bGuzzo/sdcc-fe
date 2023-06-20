@@ -1,0 +1,36 @@
+<h1 mat-dialog-title>Insert data</h1>
+<div mat-dialog-content>
+  <mat-form-field>
+    <mat-label>Active Substance</mat-label>
+    <input matInput [(ngModel)]="data.activeSubstance">
+  </mat-form-field>
+  <br>
+  <mat-form-field>
+    <mat-label>Drug</mat-label>
+    <input matInput [(ngModel)]="data.drug">
+  </mat-form-field>
+  <br>
+  <mat-form-field>
+    <mat-label>Packaging</mat-label>
+    <input matInput [(ngModel)]="data.packaging">
+  </mat-form-field>
+  <br>
+  <mat-form-field>
+    <mat-label>Reference packaging</mat-label>
+    <input matInput [(ngModel)]="data.referencePackaging">
+  </mat-form-field>
+  <br>
+  <mat-form-field>
+    <mat-label>Manufacturing company</mat-label>
+    <input matInput [(ngModel)]="data.manufacturingCompany">
+  </mat-form-field>
+  <br>
+  <mat-form-field>
+    <mat-label>Public pirce</mat-label>
+    <input matInput [(ngModel)]="data.publicPrice">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
+</div>

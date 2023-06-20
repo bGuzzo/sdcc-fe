@@ -29,6 +29,8 @@ import { MatSortModule } from '@angular/material/sort';
 import { CommonModule } from '@angular/common';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button'
 // Form
 import { FormsModule } from '@angular/forms';
 import { SpinnerComponent } from './components/spinner/spinner.component';
@@ -48,12 +50,13 @@ import { AddAdminUserComponent } from './components/add-admin-user/add-admin-use
     AddAdminUserComponent
   ],
   imports: [
-    // Anguar matirial
+    MatButtonModule,
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
     CommonModule,
     MatSnackBarModule,
+    MatDialogModule,
     // Firebase module import
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
