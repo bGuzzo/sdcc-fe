@@ -53,6 +53,14 @@ export class SearchComponent {
     );
   }
 
+  private reloadInt() {
+    this.drugServ.getAllDrugs(this.size, this.page).subscribe(
+      data => {
+        this.loadData(data);
+      }
+    );
+  }
+
   // reload page after paginator event
   public reloadPage(event: PageEvent) {
     if (this.searchState) {
@@ -106,7 +114,7 @@ export class SearchComponent {
     this.averagePrice = null;
     this.size = 15;
     this.page = 0;
-    this.ngOnInit();
+    this.reloadInt();
   }
 
   public updateDrug(drug: AifaDrug){
@@ -116,7 +124,7 @@ export class SearchComponent {
       if(result){
         this.drugServ.putUpdatedDrug(result).subscribe(
           _ => {
-            drug = result;
+            this.deleteSearch();
             this.snackbarServ.success("Drug updated");
           }
         );
