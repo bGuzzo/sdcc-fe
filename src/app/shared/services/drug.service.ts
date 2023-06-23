@@ -36,4 +36,8 @@ export class DrugService {
     var updateDrugReq = new NewAifaDrugRequest();
     return this.http.put(Constants.API_DRUG_UPD+updateDrug.id, updateDrug);
   }
+
+  deleteDrug(deleteDrug: AifaDrug): Observable<any>  {
+    return this.http.delete(Constants.API_DRUG_UPD+deleteDrug.id);
+  }
 }

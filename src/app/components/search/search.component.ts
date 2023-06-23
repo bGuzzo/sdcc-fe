@@ -21,7 +21,7 @@ export class SearchComponent {
 
   constructor(public drugServ: DrugService, public authServ: AuthService, public dialog: MatDialog, private snackbarServ: SnackbarService) {
     if(authServ.isUserAdmin()){
-      this.displayedColumns = this.displayedColumns.concat('edit');
+      this.displayedColumns = this.displayedColumns.concat('edit', 'delete');
     }
    }
 
@@ -117,7 +117,7 @@ export class SearchComponent {
     this.reloadInt();
   }
 
-  public updateDrug(drug: AifaDrug){
+  public updateDrug(drug: AifaDrug) {
     const oldDrug = Object.assign({}, drug);
     const dialogRef = this.dialog.open(UpdateDrugComponent, {data: oldDrug});
     dialogRef.afterClosed().subscribe(result => {
@@ -130,5 +130,14 @@ export class SearchComponent {
         );
       }
     });
+  }
+
+  public deleteDrug(drug: AifaDrug) {
+    this.drugServ.deleteDrug(drug).subscribe(
+      _ => {
+        this.deleteSearch();
+        this.snackbarServ.success("Drug updated");
+      }
+    )
   }
 }
